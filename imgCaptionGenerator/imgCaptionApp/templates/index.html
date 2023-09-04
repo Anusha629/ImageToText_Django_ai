@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Image Caption Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #3498db, #2980b9);
+            margin: 0;
+            padding: 0;
+            perspective: 2000px; /* Perspective for the 3D effect */
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        .paper {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            transform: rotateX(20deg); /* Rotate the paper */
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add a drop shadow */
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 10px auto;
+        }
+
+        button[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            font-size: 16px;
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="paper">
+            <h1>Give me your snaps, I will tell you brief captions</h1>
+
+            <!-- Form for uploading images -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="images" multiple>
+                <button type="submit">Generate Caption</button>
+            </form>
+
+            <!-- Display generated captions -->
+            <div>
+                {% if captions %}
+                    <h2>Pick your Caption:</h2>
+                    <ul>
+                        {% for caption in captions %}
+                            <li>{{ caption }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
